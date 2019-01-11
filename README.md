@@ -1,7 +1,7 @@
 # DEXEOS embed trade API
 ✨ Enjoy DEXEOS Trade within your DApp!  
 ## Lists
-- Getting started
+- [Getting started](#-getting-started)
 - Example
 - Docs
     - embed trade URI
