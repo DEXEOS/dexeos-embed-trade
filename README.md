@@ -1,13 +1,13 @@
 # DEXEOS embed trade API
 ✨ Enjoy DEXEOS Trade within your DApp!  
 ## Lists
-- [Getting started](#-getting-started)
-- Example
-- Docs
-    - embed trade URI
-        - Token Symbol
-        - Language
-    - Message Types
+- [Getting started](#getting-started)
+- [Example](#example)
+- [Docs](#docs)
+    - [embed trade URI](#embed-trade-uri)
+        - [Token Symbol](#token-symbol)
+        - [Language](#language)
+    - [Message Types](#message-types)
         - Send
             - signIn
             - signOut
