@@ -23,7 +23,7 @@
     ```
     // Input token symbol ex) BLACK, DICE, JKR... etc
     // You can get a token list to this links ==>  https://api.dexeos.io/v2/token or https://dexeos.io/trade  
-    <iframe title="DEXEOS Trade" src="http://localhost:8000/embed/:symbol"></iframe>
+    <iframe title="DEXEOS Trade" src="https://dexeos.io/embed/:symbol"></iframe>
     ```
 2. Add event listener
     ```
