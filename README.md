@@ -1,5 +1,7 @@
 # DEXEOS embed trade API
 ✨ Enjoy DEXEOS Trade within your DApp!  
+## Flow
+![Flow](flow.png)
 ## Lists
 - [Getting started](#getting-started)
 - [Example](#example)
