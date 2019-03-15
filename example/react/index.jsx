@@ -55,7 +55,7 @@ class Index extends Component {
         return (
             <iframe
                 title="DEXEOS TRADE"
-                src="https://dexeos.io/embed/JKR?lang=ko"
+                src="https://dexeos.io/embed/?market=eos&code=eosjackscoin&symbol=JKR&lang=ko"
                 frameBorder={0}
                 width="100%"
                 style={{ width: "100%", height: "100vh" }}

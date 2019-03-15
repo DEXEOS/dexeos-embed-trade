@@ -1,37 +1,53 @@
 # DEXEOS embed trade API
-✨ Enjoy DEXEOS Trade within your DApp!  
+✨ Enjoy DEXEOS Trade with your DApp!
+
 ## Flow
 ![Flow](flow.png)
-## Lists
-- [Getting started](#getting-started)
-- [Example](#example)
+
+## DEXEOS Public API
+
+This documentation is based on [DEXEOS Public API](https://github.com/DEXEOS/dexeos-api-public).
+
+## Keywords
+
+Name | Description | Example
+---- | ---- | ----
+`<Market>` | DEXEOS Market type | `eos` or `cusd`
+`<Lang>` | Language code | `en` or `ko` or `zh-CN` or `zh-TW`
+`<code>` | Token code | `stablecarbon` for cusd
+`<symbol>` | Token symbol in caps | `CUSD`
+
+## Contents
+- [Get started](#get-started)
 - [Docs](#docs)
-    - [embed trade URI](#embed-trade-uri)
-        - [Token Symbol](#token-symbol)
-        - [Language](#language)
+    - [URLs](#urls)
     - [Message Types](#message-types)
-        - Send
-            - signIn
-            - signOut
-            - changeLanguage
-        - Receive
-            - onload
-            - buy
-            - sell
-            - cancel
----
-## Getting started
-1. Add iframe tag with your app 
+- [Example](#example)
+
+
+## Get started
+
+1. Add `iframe` in your app 
     ```
-    // Input token symbol ex) BLACK, DICE, JKR... etc
-    // You can get a token list to this links ==>  https://api.dexeos.io/v2/token or https://dexeos.io/trade  
-    <iframe title="DEXEOS Trade" src="https://dexeos.io/embed/:symbol"></iframe>
+    <!--
+      You have to add parameter like:
+      ?market=<Market>&code=<code>&symbol=<symbol>
+
+      also you can fetch available token lists with DEXEOS Public API.
+      or see https://dexeos.io/trade
+     -->
+    <iframe title="DEXEOS Trade" src="https://dexeos.io/embed/?market=<Market>&code=<code>&symbol=<symbol>"></iframe>
+
+    <!-- for example, CUSD in EOS Market: -->
+    <iframe title="DEXEOS Trade" src="https://dexeos.io/embed/?market=eos&code=stablecarbon&symbol=CUSD"></iframe>
     ```
-2. Add event listener
+
+2. Add `Event Listener` for `message` to handle
     ```
     window.addEventListener("message", this.handleReceiveMessage, false);
     ```
-3. then now you customize "handleReceiveMessage" and "handleTransaction" function, here is a example
+
+3. Here is an example of handling `message` event:
     ```
    handleReceiveMessage = e => {
        if (e.data.indexOf("setImmediate") > -1) return;
@@ -41,8 +57,7 @@
        const { key, transaction } = receiveMessage.data;
    
        switch (msgId) {
-         case "onload":
-           // Input Account Name here
+         case "onload": // Input Account Name here
            const options = { accountId: "dexeoswallet" };
            const message = { msgId: "signIn", data: options };
            e.source.postMessage(JSON.stringify(message), e.origin);
@@ -53,49 +68,54 @@
            return this.handleTransaction(e, msgId, key, transaction);
          case "cancel":
            return this.handleTransaction(e, msgId, key, transaction);
-         default:
+         default: break;
        }
     };
     
-   handleTransaction = (e, msgId, key, transaction) => {
-        // Call eos transaction action in here
-        eos
-          .transaction(transaction)
-          .then(result => this.handleTransactionSuccess(e, msgId, key, result))
-          .catch(error => this.handleTransactionFailed(e, msgId, key, error));
-   };
+    handleTransaction = (e, msgId, key, transaction) => {
+          eos
+            .transaction(transaction)
+            .then(result => this.handleTransactionSuccess(e, msgId, key, result))
+            .catch(error => this.handleTransactionFailed(e, msgId, key, error));
+    };
     
+    // on success:
     handleTransactionSuccess = (e, msgId, key, result) => {
-        console.log("EOS Transaction Success ========>", result);
         const data = { key, result };
         const message = { msgId, data };
         e.source.postMessage(JSON.stringify(message), e.origin);
     };
     
+    // on failed:
     handleTransactionFailed = (e, msgId, key, error) => {
-        console.log("EOS Transaction Error ========>", error);
         const data = { key, error };
         const message = { msgId, data };
         e.source.postMessage(JSON.stringify(message), e.origin);
     };
     ```
-4. 🍺 That's all :D
+4. 🍺 That's all! It's easy ;)
+
+## Docs
+
+### URLs
+
+Name | Value
+---- | ----
+Embed trade | `https://dexeos.io/embed/?market=<Market>&code=<code>&symbol=<symbol>?lang=<Lang>`
+Token List | `https://api.dexeos.io/v3/token`
+
+### Message Types
+
+Type | Name | Description
+---- | ---- | ----
+Both | `buy` | buy or completed
+| | `sell` | sell or completed
+| | `cancel` | cancel or cancelled
+Income | `onload` | on load
+Send | `signIn` | User sign in
+| | `signOut` | User sign out
+| | `changeLanguage` | Change language
 
 ## Example
 - [React.js](example/react/index.jsx)
-## Docs
-### embed trade URI
-current: `https://dexeos.io/embed/:symbol`  
-#### Token Symbol
-Get Token List: `https://api.dexeos.io/v2/token` or `https://dexeos.io/trade`  
-ex) `BLACK, DICE, JKR... etc`  
-#### Language
-params: `lang`  
-types: `en`, `ko`, `zh-CN`, `zh-TW`  
-default: `en`  
-ex) `https://dexeos.io/embed/BLACK?lang=ko`
-### Message Types
-#### Send
-##### signIn
-##### signOut
-##### changeLanguage
+
