@@ -101,7 +101,7 @@ Name | Description | Example
 
 Name | Value
 ---- | ----
-Embed trade | `https://dexeos.io/embed/?market=<Market>&code=<code>&symbol=<symbol>?lang=<Lang>`
+Embed trade | `https://dexeos.io/embed/?market=<Market>&code=<code>&symbol=<symbol>&lang=<Lang>`
 Token List | `https://api.dexeos.io/v3/token`
 
 ### Message Types
